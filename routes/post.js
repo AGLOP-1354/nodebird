@@ -9,9 +9,9 @@ const { isLoggedIn } = require('./middlewares');
 const router = express.Router();
 
 try {
-  fs.readFileSync('uploads');
-} catch (err) {
-  console.error('upoads 폴더가 없어 uploads 폴더를 생성합니다.');
+  fs.readdirSync('uploads');
+} catch (error) {
+  console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
   fs.mkdirSync('uploads');
 }
 

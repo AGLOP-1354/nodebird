@@ -17,7 +17,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     await User.create({
       email,
       nick,
-      passport: hash,
+      password: hash,
     });
     return res.redirect('/');
   } catch (err) {
@@ -33,7 +33,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
       return next(authError);
     }
     if(!user) {
-      return res.render(`/?loginError=${info.message}`);
+      return res.redirect(`/?loginError=${info.message}`);
     }
     return req.login(user, (loginError) => {
       if(loginError) {
@@ -48,7 +48,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 router.get('/logout', isLoggedIn, (req, res) => {
   req.logout();
   req.session.destroy();
-  req.redirect('/');
+  res.redirect('/');
 });
 
 router.get('/kakao', passport.authenticate('kakao'));
